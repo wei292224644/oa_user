@@ -59,7 +59,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       >
         <ThemeProvider>
           <TRPCReactProvider>{props.children}</TRPCReactProvider>
-          <div className="absolute right-4 bottom-4">
+          <div className="absolute right-4 bottom-4 z-50">
             <ThemeToggle />
           </div>
           <Toaster />

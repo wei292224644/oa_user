@@ -4,12 +4,18 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./avatar": "./src/avatar.tsx",
+    "./badge": "./src/badge.tsx",
     "./button": "./src/button.tsx",
+    "./card": "./src/card.tsx",
     "./dropdown-menu": "./src/dropdown-menu.tsx",
     "./field": "./src/field.tsx",
     "./input": "./src/input.tsx",
     "./label": "./src/label.tsx",
+    "./scroll-area": "./src/scroll-area.tsx",
     "./separator": "./src/separator.tsx",
+    "./sheet": "./src/sheet.tsx",
+    "./table": "./src/table.tsx",
     "./theme": "./src/theme.tsx",
     "./toast": "./src/toast.tsx"
   },
