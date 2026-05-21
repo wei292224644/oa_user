@@ -57,7 +57,7 @@ export const cases = pgTable("cases", (t) => ({
   id: t.varchar({ length: 32 }).notNull().primaryKey(),
   caseName: t.varchar({ length: 255 }).notNull(),
   caseStatus: t.varchar({ length: 20 }).notNull(),
-  caseClass: t.varchar({ length: 10 }),
+  caseClass: t.varchar({ length: 100 }),
   caseBusiness: t.varchar({ length: 50 }),
   caseTypeStr: t.varchar({ length: 50 }),
   suitType: t.varchar({ length: 20 }),
