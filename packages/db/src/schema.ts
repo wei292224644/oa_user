@@ -52,3 +52,39 @@ export const CreateUserSchema = createInsertSchema(user, {
   createdAt: true,
   updatedAt: true,
 });
+
+export const cases = pgTable("cases", (t) => ({
+  id: t.varchar({ length: 32 }).notNull().primaryKey(),
+  caseName: t.varchar({ length: 255 }).notNull(),
+  caseStatus: t.varchar({ length: 20 }).notNull(),
+  caseClass: t.varchar({ length: 10 }),
+  caseBusiness: t.varchar({ length: 50 }),
+  caseTypeStr: t.varchar({ length: 50 }),
+  suitType: t.varchar({ length: 20 }),
+  lawsuitType: t.varchar({ length: 20 }),
+  clientName: t.varchar({ length: 255 }),
+  oppositeName: t.varchar({ length: 255 }),
+  thirdName: t.varchar({ length: 255 }),
+  takerName: t.varchar({ length: 100 }),
+  auditor: t.varchar({ length: 100 }),
+  caseDate: t.timestamp({ mode: "date" }),
+  settledAt: t.timestamp({ mode: "date" }),
+  paymentAt: t.timestamp({ mode: "date" }),
+  auditedAt: t.timestamp({ mode: "date" }),
+  marginAmount: t.numeric(),
+  remarks: t.text(),
+  archive: t.jsonb(),
+  createdAt: t.timestamp({ mode: "date" }),
+  updatedAt: t.timestamp({ mode: "date" }),
+}));
+
+export const caseApprovals = pgTable("case_approvals", (t) => ({
+  id: t.serial().notNull().primaryKey(),
+  caseId: t.varchar({ length: 32 }).notNull(),
+  type: t.integer(),
+  approve: t.integer(),
+  approverName: t.varchar({ length: 100 }),
+  remark: t.text(),
+  createdAt: t.timestamp({ mode: "date" }),
+  updatedAt: t.timestamp({ mode: "date" }),
+}));
