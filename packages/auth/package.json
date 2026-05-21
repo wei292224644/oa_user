@@ -21,6 +21,7 @@
     "@better-auth/expo": "catalog:",
     "@t3-oss/env-core": "^0.13.8",
     "better-auth": "catalog:",
+    "jose": "^6.0.10",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -1,29 +1,19 @@
-import "server-only";
+"use server";
 
-import { cache } from "react";
-import { headers } from "next/headers";
-import { nextCookies } from "better-auth/next-js";
+import { cookies } from "next/headers";
 
-import { initAuth } from "@acme/auth";
+export async function setAuthToken(token: string) {
+  const cookieStore = await cookies();
+  cookieStore.set("auth-token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+  });
+}
 
-import { env } from "~/env";
-
-const baseUrl =
-  env.VERCEL_ENV === "production"
-    ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : env.VERCEL_ENV === "preview"
-      ? `https://${env.VERCEL_URL}`
-      : "http://localhost:3000";
-
-export const auth = initAuth({
-  baseUrl,
-  productionUrl: `https://${env.VERCEL_PROJECT_PRODUCTION_URL ?? "turbo.t3.gg"}`,
-  secret: env.AUTH_SECRET,
-  discordClientId: env.AUTH_DISCORD_ID,
-  discordClientSecret: env.AUTH_DISCORD_SECRET,
-  extraPlugins: [nextCookies()],
-});
-
-export const getSession = cache(async () =>
-  auth.api.getSession({ headers: await headers() }),
-);
+export async function clearAuthToken() {
+  const cookieStore = await cookies();
+  cookieStore.delete("auth-token");
+}

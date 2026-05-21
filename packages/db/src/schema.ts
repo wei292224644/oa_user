@@ -22,4 +22,33 @@ export const CreatePostSchema = createInsertSchema(Post, {
   updatedAt: true,
 });
 
-export * from "./auth-schema";
+export const UserRole = {
+  ADMIN: "ADMIN",
+  USER: "USER",
+} as const;
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole];
+
+export const user = pgTable("user", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  phone: t.varchar({ length: 11 }).notNull().unique(),
+  name: t.varchar({ length: 256 }),
+  role: t
+    .varchar({ length: 20 })
+    .notNull()
+    .default(UserRole.USER),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
+}));
+
+export const CreateUserSchema = createInsertSchema(user, {
+  phone: z.string().regex(/^1[3-9]\d{9}$/, "Invalid phone number"),
+  name: z.string().max(256).optional(),
+  role: z.enum([UserRole.ADMIN, UserRole.USER]).optional(),
+}).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});

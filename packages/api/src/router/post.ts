@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
-import { desc, eq } from "@acme/db";
+import { desc, eq } from "drizzle-orm";
 import { CreatePostSchema, Post } from "@acme/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
