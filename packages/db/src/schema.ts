@@ -74,17 +74,21 @@ export const cases = pgTable("cases", (t) => ({
   marginAmount: t.numeric(),
   remarks: t.text(),
   archive: t.jsonb(),
-  createdAt: t.timestamp({ mode: "date" }),
-  updatedAt: t.timestamp({ mode: "date" }),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
 }));
 
 export const caseApprovals = pgTable("case_approvals", (t) => ({
   id: t.serial().notNull().primaryKey(),
-  caseId: t.varchar({ length: 32 }).notNull(),
+  caseId: t.varchar({ length: 32 }).notNull().references(() => cases.id),
   type: t.integer(),
   approve: t.integer(),
   approverName: t.varchar({ length: 100 }),
   remark: t.text(),
-  createdAt: t.timestamp({ mode: "date" }),
-  updatedAt: t.timestamp({ mode: "date" }),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  updatedAt: t
+    .timestamp({ mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
 }));
